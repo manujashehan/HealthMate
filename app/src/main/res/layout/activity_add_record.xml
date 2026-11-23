@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F7FB">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Health Record"
+            android:textColor="#17324D"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/todayDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Today's activity"
+            android:textColor="#64748B"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Steps walked"
+            android:textColor="#17324D"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/stepsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="For example, 5000"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Calories burned (kcal)"
+            android:textColor="#17324D"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/caloriesInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="For example, 250"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Water intake (ml)"
+            android:textColor="#17324D"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/waterInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="For example, 1500"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/saveRecordButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Save Record" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Cancel" />
+
+    </LinearLayout>
+</ScrollView>
+
