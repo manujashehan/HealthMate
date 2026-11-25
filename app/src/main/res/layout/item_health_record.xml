@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/bg_summary_card"
+    android:elevation="3dp"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/recordDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2026-11-22"
+        android:textColor="#075E54"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/recordDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Steps: 6000  •  Calories: 350 kcal  •  Water: 2000 ml"
+        android:textColor="#526A65"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/editRecordButton"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:backgroundTint="#DDEFEA"
+            android:text="Edit"
+            android:textAllCaps="false"
+            android:textColor="#075E54" />
+
+        <Button
+            android:id="@+id/deleteRecordButton"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FCE8E6"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:textColor="#B3261E" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,15 +1,19 @@
 package com.example.healthmate;
 
 
+
 import android.app.AlertDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,11 +38,62 @@ public class RecordsActivity extends AppCompatActivity {
         dateSearchInput = findViewById(R.id.dateSearchInput);
         recordsList = findViewById(R.id.recordsList);
 
-        adapter = new ArrayAdapter<>(
+        adapter = new ArrayAdapter<String>(
                 this,
-                android.R.layout.simple_list_item_1,
+                0,
                 new ArrayList<>()
-        );
+        ) {
+            @Override
+            public View getView(int position, View convertView,
+                                ViewGroup parent) {
+                View row = convertView;
+
+                if (row == null) {
+                    row = getLayoutInflater().inflate(
+                            R.layout.item_health_record,
+                            parent,
+                            false
+                    );
+                }
+
+                TextView dateText = row.findViewById(R.id.recordDate);
+                TextView detailsText = row.findViewById(R.id.recordDetails);
+                Button editButton = row.findViewById(R.id.editRecordButton);
+                Button deleteButton = row.findViewById(R.id.deleteRecordButton);
+
+                String item = getItem(position);
+
+                if (item != null && item.contains("\n")) {
+                    String[] parts = item.split("\n", 2);
+                    dateText.setVisibility(View.VISIBLE);
+                    dateText.setText(parts[0]);
+                    detailsText.setText(parts[1]);
+
+                    if (position < dates.size()) {
+                        String recordDate = dates.get(position);
+                        editButton.setVisibility(View.VISIBLE);
+                        deleteButton.setVisibility(View.VISIBLE);
+
+                        editButton.setOnClickListener(
+                                view -> editRecord(recordDate));
+
+                        deleteButton.setOnClickListener(
+                                view -> confirmDelete(recordDate));
+                    } else {
+                        editButton.setVisibility(View.GONE);
+                        deleteButton.setVisibility(View.GONE);
+                    }
+                } else {
+                    dateText.setVisibility(View.GONE);
+                    detailsText.setText(item == null ? "" : item);
+                    editButton.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.GONE);
+                }
+
+                return row;
+            }
+        };
+
         recordsList.setAdapter(adapter);
 
         Button searchButton = findViewById(R.id.searchButton);
@@ -54,19 +109,6 @@ public class RecordsActivity extends AppCompatActivity {
             loadRecords("");
         });
 
-        recordsList.setOnItemClickListener((parent, view, position, id) -> {
-            if (position < dates.size()) {
-                editRecord(dates.get(position));
-            }
-        });
-
-        recordsList.setOnItemLongClickListener((parent, view, position, id) -> {
-            if (position < dates.size()) {
-                confirmDelete(dates.get(position));
-            }
-            return true;
-        });
-
         loadRecords("");
     }
 
@@ -78,18 +120,21 @@ public class RecordsActivity extends AppCompatActivity {
                 ? database.getAllRecords()
                 : database.searchRecords(dateFilter);
 
-        while (cursor.moveToNext()) {
-            String date = cursor.getString(0);
-            dates.add(date);
+        try {
+            while (cursor.moveToNext()) {
+                String date = cursor.getString(0);
+                dates.add(date);
 
-            String row = date
-                    + "\nSteps: " + cursor.getInt(1)
-                    + "   Calories: " + cursor.getInt(2) + " kcal"
-                    + "   Water: " + cursor.getInt(3) + " ml";
+                String row = date
+                        + "\n👣 Steps: " + cursor.getInt(1)
+                        + "    🔥 Calories: " + cursor.getInt(2) + " kcal"
+                        + "    💧 Water: " + cursor.getInt(3) + " ml";
 
-            adapter.add(row);
+                adapter.add(row);
+            }
+        } finally {
+            cursor.close();
         }
-        cursor.close();
 
         if (dates.isEmpty()) {
             adapter.add("No records found.");
@@ -183,3 +228,4 @@ public class RecordsActivity extends AppCompatActivity {
         super.onDestroy();
     }
 }
+
