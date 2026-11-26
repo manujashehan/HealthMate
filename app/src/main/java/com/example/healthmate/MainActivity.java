@@ -18,6 +18,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
     private HealthDatabaseHelper database;
     private TextView stepsSummary;
     private TextView caloriesSummary;
@@ -33,9 +35,14 @@ public class MainActivity extends AppCompatActivity {
         if (root != null) {
             ViewCompat.setOnApplyWindowInsetsListener(root, (view, insets) -> {
                 Insets bars = insets.getInsets(
-                        WindowInsetsCompat.Type.systemBars());
+                        WindowInsetsCompat.Type.systemBars()
+                );
                 view.setPadding(
-                        bars.left, bars.top, bars.right, bars.bottom);
+                        bars.left,
+                        bars.top,
+                        bars.right,
+                        bars.bottom
+                );
                 return insets;
             });
         }
@@ -49,14 +56,27 @@ public class MainActivity extends AppCompatActivity {
         Button addButton = findViewById(R.id.addRecordButton);
         addButton.setOnClickListener(view -> {
             Intent intent = new Intent(
-                    MainActivity.this, AddRecordActivity.class);
+                    MainActivity.this,
+                    AddRecordActivity.class
+            );
             startActivity(intent);
         });
 
         Button recordsButton = findViewById(R.id.viewRecordsButton);
         recordsButton.setOnClickListener(view -> {
             Intent intent = new Intent(
-                    MainActivity.this, RecordsActivity.class);
+                    MainActivity.this,
+                    RecordsActivity.class
+            );
+            startActivity(intent);
+        });
+
+        Button profileButton = findViewById(R.id.profileButton);
+        profileButton.setOnClickListener(view -> {
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    ProfileActivity.class
+            );
             startActivity(intent);
         });
 
@@ -68,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
                     .apply();
 
             Intent intent = new Intent(
-                    MainActivity.this, AuthActivity.class);
+                    MainActivity.this,
+                    AuthActivity.class
+            );
             startActivity(intent);
             finish();
         });
@@ -86,7 +108,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         String today = new SimpleDateFormat(
-                "yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                "yyyy-MM-dd",
+                Locale.getDefault()
+        ).format(new Date());
 
         try (android.database.Cursor cursor =
                      database.getTodayRecord(today)) {

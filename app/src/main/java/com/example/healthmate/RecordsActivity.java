@@ -1,7 +1,5 @@
 package com.example.healthmate;
 
-
-
 import android.app.AlertDialog;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,9 +16,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
+
 
 public class RecordsActivity extends AppCompatActivity {
+
+
+
+
+
 
     private HealthDatabaseHelper database;
     private EditText dateSearchInput;
@@ -58,27 +64,33 @@ public class RecordsActivity extends AppCompatActivity {
 
                 TextView dateText = row.findViewById(R.id.recordDate);
                 TextView detailsText = row.findViewById(R.id.recordDetails);
-                Button editButton = row.findViewById(R.id.editRecordButton);
-                Button deleteButton = row.findViewById(R.id.deleteRecordButton);
+                Button editButton =
+                        row.findViewById(R.id.editRecordButton);
+                Button deleteButton =
+                        row.findViewById(R.id.deleteRecordButton);
 
                 String item = getItem(position);
 
                 if (item != null && item.contains("\n")) {
                     String[] parts = item.split("\n", 2);
+
                     dateText.setVisibility(View.VISIBLE);
                     dateText.setText(parts[0]);
                     detailsText.setText(parts[1]);
 
                     if (position < dates.size()) {
                         String recordDate = dates.get(position);
+
                         editButton.setVisibility(View.VISIBLE);
                         deleteButton.setVisibility(View.VISIBLE);
 
                         editButton.setOnClickListener(
-                                view -> editRecord(recordDate));
+                                view -> editRecord(recordDate)
+                        );
 
                         deleteButton.setOnClickListener(
-                                view -> confirmDelete(recordDate));
+                                view -> confirmDelete(recordDate)
+                        );
                     } else {
                         editButton.setVisibility(View.GONE);
                         deleteButton.setVisibility(View.GONE);
@@ -120,15 +132,23 @@ public class RecordsActivity extends AppCompatActivity {
                 ? database.getAllRecords()
                 : database.searchRecords(dateFilter);
 
+        NumberFormat numberFormat =
+                NumberFormat.getIntegerInstance(Locale.US);
+
         try {
             while (cursor.moveToNext()) {
                 String date = cursor.getString(0);
                 dates.add(date);
 
                 String row = date
-                        + "\n👣 Steps: " + cursor.getInt(1)
-                        + "    🔥 Calories: " + cursor.getInt(2) + " kcal"
-                        + "    💧 Water: " + cursor.getInt(3) + " ml";
+                        + "\n• 👣 Steps: "
+                        + numberFormat.format(cursor.getInt(1))
+                        + "\n• 🔥 Calories Burned: "
+                        + numberFormat.format(cursor.getInt(2))
+                        + " kcal"
+                        + "\n• 💧 Water Intake: "
+                        + numberFormat.format(cursor.getInt(3))
+                        + " ml";
 
                 adapter.add(row);
             }
@@ -186,12 +206,19 @@ public class RecordsActivity extends AppCompatActivity {
                         );
 
                         loadRecords(currentFilter);
-                        Toast.makeText(this, "Record updated",
-                                Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(
+                                this,
+                                "Record updated",
+                                Toast.LENGTH_SHORT
+                        ).show();
 
                     } catch (NumberFormatException e) {
-                        Toast.makeText(this, "Enter all three numbers",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                                this,
+                                "Enter all three numbers",
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 })
                 .show();
@@ -208,14 +235,19 @@ public class RecordsActivity extends AppCompatActivity {
     private void confirmDelete(String date) {
         new AlertDialog.Builder(this)
                 .setTitle("Delete record?")
-                .setMessage("Delete the health record for " + date + "?")
+                .setMessage(
+                        "Delete the health record for " + date + "?"
+                )
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("Delete", (dialog, which) -> {
                     database.deleteRecord(date);
                     loadRecords(currentFilter);
 
-                    Toast.makeText(this, "Record deleted",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            this,
+                            "Record deleted",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 })
                 .show();
     }
@@ -225,7 +257,7 @@ public class RecordsActivity extends AppCompatActivity {
         if (database != null) {
             database.close();
         }
+
         super.onDestroy();
     }
 }
-

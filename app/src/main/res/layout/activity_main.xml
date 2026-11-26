@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +14,6 @@
         android:orientation="vertical"
         android:paddingBottom="28dp">
 
-        <!-- Gradient welcome header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,7 +78,6 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Daily summary heading -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +88,6 @@
             android:textSize="21sp"
             android:textStyle="bold" />
 
-        <!-- Summary cards -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -159,7 +157,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Main actions -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -199,11 +196,25 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/profileButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="18dp"
+            android:backgroundTint="#E7F4F0"
+            android:text="My Profile"
+            android:textAllCaps="false"
+            android:textColor="#075E54"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Button
             android:id="@+id/logoutButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="18dp"
             android:backgroundTint="#E8EFED"
             android:text="Log out"
