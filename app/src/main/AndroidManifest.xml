@@ -13,6 +13,10 @@
         android:theme="@style/Theme.HealthMate">
 
         <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".AddRecordActivity"
             android:exported="false" />
 
